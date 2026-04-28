@@ -1,6 +1,8 @@
 import React, { createContext, useContext, useState, useEffect } from 'react';
 import axios from 'axios';
 
+const API_URL = process.env.REACT_APP_API_URL || '';
+
 const AuthContext = createContext();
 
 export const useAuth = () => useContext(AuthContext);
@@ -21,7 +23,7 @@ export const AuthProvider = ({ children }) => {
 
   const fetchUser = async () => {
     try {
-      const res = await axios.get('/api/auth/me');
+      const res = await axios.get(`${API_URL}/api/auth/me`);
       setUser(res.data);
     } catch {
       logout();
@@ -31,7 +33,7 @@ export const AuthProvider = ({ children }) => {
   };
 
   const login = async (email, password) => {
-    const res = await axios.post('/api/auth/login', { email, password });
+    const res = await axios.post(`${API_URL}/api/auth/login`, { email, password });
     const { token: newToken, user: userData } = res.data;
     localStorage.setItem('crm_token', newToken);
     axios.defaults.headers.common['Authorization'] = `Bearer ${newToken}`;
@@ -41,7 +43,7 @@ export const AuthProvider = ({ children }) => {
   };
 
   const register = async (name, email, password, role) => {
-    const res = await axios.post('/api/auth/register', { name, email, password, role });
+    const res = await axios.post(`${API_URL}/api/auth/register`, { name, email, password, role });
     const { token: newToken, user: userData } = res.data;
     localStorage.setItem('crm_token', newToken);
     axios.defaults.headers.common['Authorization'] = `Bearer ${newToken}`;
