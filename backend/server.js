@@ -12,6 +12,10 @@ app.use(cors({
   origin: '*',
   credentials: false
 }));
+
+// Handle OPTIONS preflight
+app.options('*', cors());
+
 app.use(express.json());
 
 // Routes
