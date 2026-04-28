@@ -8,8 +8,11 @@ dotenv.config();
 const app = express();
 
 // Middleware
-app.use(cors({ origin: 'http://localhost:3000', credentials: true }));
-app.use(express.json());
+ app.use(cors({ 
+  origin: ['http://localhost:3000', 'https://crm-project-4fxq.vercel.app'],
+  credentials: true 
+})); 
+
 
 // Routes
 app.use('/api/auth', require('./routes/auth'));
